@@ -71,7 +71,7 @@ const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
               : "white",
             padding: isActive() ? "6px" : "4px",
           }}
-          class="flex items-center justify-center transition-all duration-150 ease-in-out"
+          class="flex items-center justify-center transition-all duration-70 ease-in-out"
         >
           <div class={`h-6 w-6 ${isActive() ? "text-link" : "text-white"}`}>
             <GraphIcon />
