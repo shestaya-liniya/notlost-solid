@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import solidPlugin from 'vite-plugin-solid';
-import tsconfigPaths from 'vite-tsconfig-paths';
-import mkcert from 'vite-plugin-mkcert';
-import tailwindcss from '@tailwindcss/vite';
-import solidSvg from 'vite-plugin-solid-svg'
+import { defineConfig } from "vite";
+import solidPlugin from "vite-plugin-solid";
+import tsconfigPaths from "vite-tsconfig-paths";
+import mkcert from "vite-plugin-mkcert";
+import tailwindcss from "@tailwindcss/vite";
+import solidSvg from "vite-plugin-solid-svg";
 
 export default defineConfig({
   plugins: [
@@ -24,9 +24,9 @@ export default defineConfig({
     }),
   ],
   build: {
-    target: 'esnext',
+    target: "esnext",
   },
-  publicDir: './public',
+  publicDir: "./public",
   server: {
     // Exposes your dev server and makes it accessible for the devices in the same network.
     host: true,

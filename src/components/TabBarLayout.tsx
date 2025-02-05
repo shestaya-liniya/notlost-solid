@@ -6,13 +6,15 @@ import PencilIcon from "@/assets/pencil-icon.svg?component-solid";
 import Tappable from "@/ui/Tappable.jsx";
 import { createSignal } from "solid-js";
 import ManageDialogsModal from "./ManageDialogsModal.jsx";
-
 export default function TabBarLayout(props: {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   children: ParentProps["children"];
 }) {
-  const [isModalOpen, setIsModalOpen] = createSignal(false);
+  const [isModalOpen, setIsModalOpen] = createSignal<boolean>(false);
+
+  const closeModal = () => setIsModalOpen(false);
+  const openModal = () => setIsModalOpen(true);
 
   return (
     <div class="flex flex-col" style={{ height: "100dvh" }}>
@@ -28,16 +30,13 @@ export default function TabBarLayout(props: {
         </div>
         <Tappable
           class="p-3 rounded-full bg-link absolute bottom-4 right-4"
-          onClick={() => setIsModalOpen(true)}
+          onClick={openModal}
         >
           <PencilIcon class="w-7 h-7" />
         </Tappable>
       </div>
       <TabBar activeTab={props.activeTab} setActiveTab={props.setActiveTab} />
-      <ManageDialogsModal
-        isOpen={isModalOpen()}
-        close={() => setIsModalOpen(false)}
-      />
+      <ManageDialogsModal isOpen={isModalOpen()} close={closeModal} />
     </div>
   );
 }
