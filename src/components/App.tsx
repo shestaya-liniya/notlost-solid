@@ -5,6 +5,10 @@ import { createSignal } from "solid-js";
 
 export default function App() {
   const [activeTab, setActiveTab] = createSignal<string>("folders");
+
+  const isFoldersTabActive = () => activeTab() === "folders";
+  const isTryTabActive = () => activeTab() === "try";
+
   return (
     <Router>
       <Route
@@ -13,12 +17,12 @@ export default function App() {
           <TabBarLayout activeTab={activeTab()} setActiveTab={setActiveTab}>
             <div class="relative w-screen h-full overflow-hidden">
               <div
-                class={`w-screen absolute top-0 left-0 transition-all ease ${activeTab() === "folders" ? "duration-300 translate-x-0" : "duration-300 translate-x-full -z-10"}`}
+                class={`w-screen absolute top-0 left-0 transition-all ease ${isFoldersTabActive() ? "duration-300 translate-x-0" : "duration-300 translate-x-full -z-10 opacity-0"}`}
               >
                 <Folders />
               </div>
               <div
-                class={`w-screen absolute top-0 left-0 transition-all ease ${activeTab() === "try" ? "duration-300 translate-x-0" : "duration-300 -translate-x-full -z-10"}`}
+                class={`w-screen absolute top-0 left-0 transition-all ease ${isTryTabActive() ? "duration-300 translate-x-0" : "duration-300 -translate-x-full -z-10 opacity-0"}`}
               >
                 <Folders />
               </div>
