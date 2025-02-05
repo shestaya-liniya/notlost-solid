@@ -1,36 +1,35 @@
-import { createSignal, JSX, onMount } from "solid-js";
+import { createSignal, JSX, createMemo, onCleanup, onMount } from "solid-js";
+import { Motion } from "solid-motionone";
 import ChevronIcon from "@/assets/chevron-right.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import { Motion } from "solid-motionone";
 
 export default function Accordion(props: {
   children: JSX.Element;
   title: string;
 }) {
-  const [expanded, setExpanded] = createSignal<boolean>(false);
+  const [expanded, setExpanded] = createSignal(false);
+
   return (
     <div>
       <AccordionHeader
         title={props.title}
-        setExpanded={setExpanded}
-        expanded={expanded()}
+        toggleExpanded={() => setExpanded((prev) => !prev)}
+        expanded={expanded}
       />
-      <AccordionContent expanded={expanded()}>
-        {props.children}
-      </AccordionContent>
+      <AccordionContent expanded={expanded}>{props.children}</AccordionContent>
     </div>
   );
 }
 
 const AccordionHeader = (props: {
   title: string;
-  setExpanded: (expanded: boolean) => void;
-  expanded: boolean;
+  toggleExpanded: () => void;
+  expanded: () => boolean;
 }) => {
   return (
     <div
       class="rounded-2xl bg-primary px-6 py-4"
-      onClick={() => props.setExpanded(!props.expanded)}
+      onClick={props.toggleExpanded}
     >
       <div class="flex justify-between items-center">
         <div class="flex items-center gap-4">
@@ -39,7 +38,7 @@ const AccordionHeader = (props: {
         </div>
         <ChevronIcon
           class={`w-5 h-5 text-link transition-transform duration-300 ease-in-out ${
-            props.expanded ? "-rotate-90" : "rotate-90"
+            props.expanded() ? "-rotate-90" : "rotate-90"
           }`}
         />
       </div>
@@ -49,28 +48,33 @@ const AccordionHeader = (props: {
 
 const AccordionContent = (props: {
   children: JSX.Element;
-  expanded: boolean;
+  expanded: () => boolean;
 }) => {
   let contentRef: HTMLDivElement | undefined;
   const [contentHeight, setContentHeight] = createSignal(0);
 
-  onMount(() => {
-    if (contentRef) {
-      setContentHeight(contentRef.scrollHeight);
+  // Measure content height when expanded
+  const updateHeight = () => {
+    if (contentRef && props.expanded()) {
+      requestAnimationFrame(() => setContentHeight(contentRef.scrollHeight));
     }
-  });
+  };
+
+  onMount(updateHeight);
+
   return (
     <Motion.div
-      ref={contentRef}
       class="overflow-hidden"
       initial={{ height: 0, opacity: 0 }}
       animate={{
-        minHeight: props.expanded ? `${contentHeight()}px` : 0,
-        opacity: props.expanded ? 1 : 0,
+        height: props.expanded() ? `${contentHeight()}px` : 0,
+        opacity: props.expanded() ? 1 : 0,
       }}
       transition={{ duration: 0.15, easing: "ease-in-out" }}
     >
-      <div class="p-4 bg-secondary rounded-b-2xl">{props.children}</div>
+      <div ref={contentRef} class="p-4 bg-secondary rounded-b-2xl">
+        {props.children}
+      </div>
     </Motion.div>
   );
 };
