@@ -18,11 +18,6 @@ export default function Tappable(props: { children: JSX.Element }) {
       onPointerDown={() => setActive(true)}
       onPointerUp={() => setActive(false)}
       onPointerLeave={() => setActive(false)}
-      onMouseDown={() => setActive(true)}
-      onMouseUp={() => setActive(false)}
-      onTouchStart={() => setActive(true)}
-      onTouchEnd={() => setActive(false)}
-      onTouchCancel={() => setActive(false)}
       onClick={handleClick}
     >
       {props.children}
