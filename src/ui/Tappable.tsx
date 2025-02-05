@@ -26,7 +26,7 @@ export default function Tappable(props: {
       }}
       onPointerUp={() => setActive(false)}
       onPointerLeave={() => setActive(false)}
-      onClick={handleClick}
+      //onClick={handleClick}
     >
       {props.children}
     </div>
