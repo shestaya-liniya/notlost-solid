@@ -1,7 +1,7 @@
 import { A, useLocation } from "@solidjs/router";
 import { Component, ParentProps } from "solid-js";
 import tgWallpaper from "@/assets/tg-wallpaper-paris.svg";
-import graphIcon from "@/assets/graph-icon.svg";
+import GraphIcon from "@/assets/graph-icon.svg?component-solid";
 import { hexToRgba } from "@/helpers/css/hex-to-rgba.js";
 
 export default function TabBarLayout(props: ParentProps) {
@@ -61,7 +61,7 @@ const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
     >
       <div
         class={`h-8 w-8 rounded-full transition-all duration-150 ease-in-out ${
-          isActive() ? "bg-[#6ab2f2]" : "bg-transparent"
+          isActive() ? "bg-link/10" : "bg-transparent"
         }`}
       >
         <div
@@ -74,7 +74,7 @@ const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
           class="flex items-center justify-center transition-all duration-150 ease-in-out"
         >
           <div class={`h-6 w-6 ${isActive() ? "text-link" : "text-white"}`}>
-            <img src={graphIcon} alt="graph" />
+            <GraphIcon />
           </div>
         </div>
       </div>

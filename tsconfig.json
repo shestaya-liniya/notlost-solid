@@ -26,7 +26,8 @@
     "strict": true,
     "target": "ESNext",
     "types": [
-      "vite/client"
+      "vite/client",
+      "vite-plugin-solid-svg/types",
     ]
   },
   "include": [

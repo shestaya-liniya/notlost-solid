@@ -3,6 +3,7 @@ import solidPlugin from 'vite-plugin-solid';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import mkcert from 'vite-plugin-mkcert';
 import tailwindcss from '@tailwindcss/vite';
+import solidSvg from 'vite-plugin-solid-svg'
 
 export default defineConfig({
   plugins: [
@@ -17,7 +18,10 @@ export default defineConfig({
     // Using this plugin requires admin rights on the first dev-mode launch.
     // https://www.npmjs.com/package/vite-plugin-mkcert
     process.env.HTTPS && mkcert(),
-    tailwindcss()
+    tailwindcss(),
+    solidSvg({
+      defaultAsComponent: false,
+    }),
   ],
   build: {
     target: 'esnext',

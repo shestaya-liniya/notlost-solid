@@ -1,5 +1,16 @@
 @import "tailwindcss";
 
+@theme {
+  /* --- backgrounds --- */
+  --color-primary: var(--tg-bg-color);
+  --color-secondary: var(--tg-theme-secondary-bg-color);
+  --color-bezeled: var(--tgui--secondary_fill);
+  /*------*/
+
+  --color-link: var(--tg-theme-link-color);
+  --color-accent: var(--tg-theme-accent-text-color);
+}
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen',
   'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
