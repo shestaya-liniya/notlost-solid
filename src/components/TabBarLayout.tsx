@@ -57,7 +57,7 @@ const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
   return (
     <A
       href={props.to}
-      class="w-full text-[12px] flex flex-col items-center gap-0.5 cursor-pointer transition-all duration-300 ease-in-out"
+      class="w-full text-[12px] flex flex-col items-center gap-0.5 cursor-pointer transition-all duration-150 ease-in-out"
     >
       <div
         class={`h-8 w-8 rounded-full transition-all duration-150 ease-in-out ${
