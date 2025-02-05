@@ -2,7 +2,6 @@ import { A, useLocation } from "@solidjs/router";
 import { Component, ParentProps } from "solid-js";
 import tgWallpaper from "@/assets/tg-wallpaper-paris.svg";
 import GraphIcon from "@/assets/graph-icon.svg?component-solid";
-import { hexToRgba } from "@/helpers/css/hex-to-rgba.js";
 
 export default function TabBarLayout(props: ParentProps) {
   return (
