@@ -1,7 +1,6 @@
 import { createSignal, JSX /* onMount */ } from "solid-js";
 import ChevronIcon from "@/assets/chevron-right.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import { Motion } from "solid-motionone";
 
 export default function Accordion(props: {
   children: JSX.Element;
@@ -58,18 +57,5 @@ const AccordionContent = (props: {
       setContentHeight(contentRef.scrollHeight);
     }
   }); */
-  return (
-    <Motion.div
-      /* ref={contentRef} */
-      class="overflow-hidden"
-      initial={{ height: 0, opacity: 0 }}
-      animate={{
-        height: props.expanded ? `50px` : 0,
-        opacity: props.expanded ? 1 : 0,
-      }}
-      transition={{ duration: 0.15, easing: "ease-in-out" }}
-    >
-      <div class="p-4 bg-secondary rounded-b-2xl">{props.children}</div>
-    </Motion.div>
-  );
+  return <div class="p-4 bg-secondary rounded-b-2xl">{props.children}</div>;
 };
