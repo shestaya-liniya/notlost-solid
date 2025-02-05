@@ -3,21 +3,22 @@ import { createSignal, JSX } from "solid-js";
 export default function Tappable(props: { children: JSX.Element }) {
   const [active, setActive] = createSignal(false);
 
-  /* const handleClick = () => {
+  const handleClick = () => {
     setActive(true);
     setTimeout(() => {
       setActive(false);
     }, 100);
-  }; */
+  };
 
   return (
     <div
       class={`rounded-xl transition duration-150 ${
         active() ? "opacity-85 scale-98" : "opacity-100 scale-100"
       }`}
-      onPointerDown={() => setActive(true)}
+      /* onPointerDown={() => setActive(true)}
       onPointerUp={() => setActive(false)}
-      onPointerLeave={() => setActive(false)}
+      onPointerLeave={() => setActive(false)} */
+      onClick={handleClick}
     >
       {props.children}
     </div>
