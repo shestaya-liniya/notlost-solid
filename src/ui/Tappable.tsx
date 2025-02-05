@@ -7,13 +7,13 @@ export default function Tappable(props: {
 }) {
   const [active, setActive] = createSignal(false);
 
-  /* const handleClick = () => {
+  const handleClick = () => {
     setActive(true);
     setTimeout(() => {
       setActive(false);
+      props.onClick?.();
     }, 100);
-    props.onClick?.();
-  }; */
+  };
 
   return (
     <div
@@ -22,11 +22,10 @@ export default function Tappable(props: {
       } ${props.class}`}
       onPointerDown={() => {
         setActive(true);
-        props.onClick?.();
       }}
       onPointerUp={() => setActive(false)}
       onPointerLeave={() => setActive(false)}
-      //onClick={handleClick}
+      onClick={handleClick}
     >
       {props.children}
     </div>
