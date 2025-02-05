@@ -1,6 +1,7 @@
-import { createSignal, JSX, ParentProps } from "solid-js";
+import { createSignal, JSX, onMount } from "solid-js";
 import ChevronIcon from "@/assets/chevron-right.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
+import { Motion } from "solid-motionone";
 
 export default function Accordion(props: {
   children: JSX.Element;
@@ -14,7 +15,9 @@ export default function Accordion(props: {
         setExpanded={setExpanded}
         expanded={expanded()}
       />
-      {expanded() && <AccordionContent>{props.children}</AccordionContent>}
+      <AccordionContent expanded={expanded()}>
+        {props.children}
+      </AccordionContent>
     </div>
   );
 }
@@ -35,7 +38,7 @@ const AccordionHeader = (props: {
           <div class="font-bold">{props.title}</div>
         </div>
         <ChevronIcon
-          class={`w-5 h-5 text-link transition-transform duration-150 ease-in-out ${
+          class={`w-5 h-5 text-link transition-transform duration-300 ease-in-out ${
             props.expanded ? "-rotate-90" : "rotate-90"
           }`}
         />
@@ -44,10 +47,30 @@ const AccordionHeader = (props: {
   );
 };
 
-const AccordionContent = (props: ParentProps) => {
+const AccordionContent = (props: {
+  children: JSX.Element;
+  expanded: boolean;
+}) => {
+  let contentRef: HTMLDivElement | undefined;
+  const [contentHeight, setContentHeight] = createSignal(0);
+
+  onMount(() => {
+    if (contentRef) {
+      setContentHeight(contentRef.scrollHeight);
+    }
+  });
   return (
-    <div>
-      <div>{props.children}</div>
-    </div>
+    <Motion.div
+      ref={contentRef}
+      class="overflow-hidden"
+      initial={{ height: 0, opacity: 0 }}
+      animate={{
+        minHeight: props.expanded ? `${contentHeight()}px` : 0,
+        opacity: props.expanded ? 1 : 0,
+      }}
+      transition={{ duration: 0.15, easing: "ease-in-out" }}
+    >
+      <div class="p-4 bg-secondary rounded-b-2xl">{props.children}</div>
+    </Motion.div>
   );
 };
