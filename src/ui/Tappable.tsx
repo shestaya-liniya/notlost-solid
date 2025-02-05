@@ -13,7 +13,7 @@ export default function Tappable(props: { children: JSX.Element }) {
   return (
     <div
       class={`rounded-xl transition duration-150 ${
-        active() ? "opacity-85 scale-95" : "opacity-100 scale-100"
+        active() ? "opacity-85 scale-98" : "opacity-100 scale-100"
       }`}
       onPointerDown={() => setActive(true)}
       onPointerUp={() => setActive(false)}
