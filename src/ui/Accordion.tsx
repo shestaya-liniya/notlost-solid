@@ -1,6 +1,7 @@
-import { createSignal, JSX /* onMount */ } from "solid-js";
+import { createSignal, JSX } from "solid-js";
 import ChevronIcon from "@/assets/chevron-right.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
+import Tappable from "./Tappable.jsx";
 
 export default function Accordion(props: {
   children: JSX.Element;
@@ -8,14 +9,14 @@ export default function Accordion(props: {
 }) {
   const [expanded, setExpanded] = createSignal<boolean>(false);
   return (
-    <div>
+    <Tappable>
       <AccordionHeader
         title={props.title}
         toggleExpanded={() => setExpanded((prev) => !prev)}
         expanded={expanded()}
       />
       {expanded() && <AccordionContent>{props.children}</AccordionContent>}
-    </div>
+    </Tappable>
   );
 }
 
@@ -45,13 +46,6 @@ const AccordionHeader = (props: {
 };
 
 const AccordionContent = (props: { children: JSX.Element }) => {
-  /* let contentRef: HTMLDivElement | undefined;
-  const [contentHeight, setContentHeight] = createSignal(0);
-  onMount(() => {
-    if (contentRef) {
-      setContentHeight(contentRef.scrollHeight);
-    }
-  }); */
   return (
     <div class="p-4 bg-secondary rounded-b-2xl animate-fadeIn">
       {props.children}
