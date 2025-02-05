@@ -1,9 +1,12 @@
-import { A, useLocation } from "@solidjs/router";
 import { Component, ParentProps } from "solid-js";
 import tgWallpaper from "@/assets/tg-wallpaper-paris.svg";
 import GraphIcon from "@/assets/graph-icon.svg?component-solid";
 
-export default function TabBarLayout(props: ParentProps) {
+export default function TabBarLayout(props: {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+  children: ParentProps["children"];
+}) {
   return (
     <div class="flex flex-col" style={{ height: "100dvh" }}>
       <div class="flex-1 overflow-auto text-white">
@@ -13,22 +16,33 @@ export default function TabBarLayout(props: ParentProps) {
             mask: `url(${tgWallpaper}) center / contain`,
           }}
         />
-        <div style={{ "padding-top": "40px" }}>
-          <div>{props.children}</div>
+        <div style={{ "padding-top": "40px" }} class="h-full">
+          {props.children}
         </div>
       </div>
-      <TabBar />
+      <TabBar activeTab={props.activeTab} setActiveTab={props.setActiveTab} />
     </div>
   );
 }
 
-function TabBar() {
+function TabBar(props: {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
+}) {
   return (
     <div class="bg-primary border-t-[1px] border-primary">
       <div class="max-w-screen-xl mx-auto px-4 pt-2 pb-4">
         <div class="flex justify-around items-center">
-          <BottomBarLink to={"/tab/try"} title="Try" />
-          <BottomBarLink to={"/tab/folders"} title="Folders" />
+          <BottomBarLink
+            onClick={() => props.setActiveTab("try")}
+            title="Try"
+            isActive={props.activeTab === "try"}
+          />
+          <BottomBarLink
+            onClick={() => props.setActiveTab("folders")}
+            title="Folders"
+            isActive={props.activeTab === "folders"}
+          />
         </div>
       </div>
     </div>
@@ -36,43 +50,40 @@ function TabBar() {
 }
 
 interface BottomBarLinkProps {
-  to: string;
+  onClick: () => void;
   title: string;
+  isActive: boolean;
 }
 
 const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
-  const location = useLocation();
-  const isActive = () => {
-    return location.pathname.concat("/").includes(props.to);
-  };
-
+  const { onClick, title } = props;
   return (
-    <A
-      href={props.to}
+    <div
+      onClick={onClick}
       class="w-full text-[12px] flex flex-col items-center gap-0.5 cursor-pointer transition-all duration-150 ease-in-out"
     >
       <div
         class={`h-8 w-8 rounded-full transition-all duration-150 ease-in-out ${
-          isActive() ? "bg-link/10" : "bg-transparent"
+          props.isActive ? "bg-link/10" : "bg-transparent"
         }`}
       >
         <div
           style={{
-            color: isActive() ? "#008080" : "white",
-            padding: isActive() ? "6px" : "4px",
+            color: props.isActive ? "#008080" : "white",
+            padding: props.isActive ? "6px" : "4px",
           }}
           class="flex items-center justify-center transition-all duration-70 ease-in-out"
         >
-          <div class={`h-6 w-6 ${isActive() ? "text-link" : "text-white"}`}>
+          <div class={`h-6 w-6 ${props.isActive ? "text-link" : "text-white"}`}>
             <GraphIcon />
           </div>
         </div>
       </div>
       <span
-        class={`font-medium ${isActive() ? "px-2 rounded-2xl text-accent" : ""}`}
+        class={`font-medium ${props.isActive ? "px-2 rounded-2xl text-accent" : ""}`}
       >
-        {props.title}
+        {title}
       </span>
-    </A>
+    </div>
   );
 };
