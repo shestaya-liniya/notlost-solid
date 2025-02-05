@@ -52,5 +52,9 @@ const AccordionContent = (props: { children: JSX.Element }) => {
       setContentHeight(contentRef.scrollHeight);
     }
   }); */
-  return <div class="p-4 bg-secondary rounded-b-2xl">{props.children}</div>;
+  return (
+    <div class="p-4 bg-secondary rounded-b-2xl animate-fadeIn">
+      {props.children}
+    </div>
+  );
 };
