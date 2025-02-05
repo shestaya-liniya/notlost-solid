@@ -7,13 +7,13 @@ export default function Tappable(props: {
 }) {
   const [active, setActive] = createSignal(false);
 
-  const handleClick = () => {
+  /* const handleClick = () => {
     setActive(true);
     setTimeout(() => {
       setActive(false);
     }, 100);
     props.onClick?.();
-  };
+  }; */
 
   return (
     <div
