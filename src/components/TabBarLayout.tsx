@@ -14,7 +14,7 @@ export default function TabBarLayout(props: ParentProps) {
           }}
         />
         <div style={{ "padding-top": "40px" }}>
-          <div>{props.children}</div>;
+          <div>{props.children}</div>
         </div>
       </div>
       <TabBar />
@@ -27,14 +27,8 @@ function TabBar() {
     <div class="bg-primary border-t-[1px] border-primary">
       <div class="max-w-screen-xl mx-auto px-4 pt-2 pb-4">
         <div class="flex justify-around items-center">
-          <BottomBarLink 
-            to={'/tab/try'} 
-            title="Try" 
-          />
-          <BottomBarLink
-            to={'/tab/folders'}
-            title="Folders"
-          />
+          <BottomBarLink to={"/tab/try"} title="Try" />
+          <BottomBarLink to={"/tab/folders"} title="Folders" />
         </div>
       </div>
     </div>
@@ -49,8 +43,8 @@ interface BottomBarLinkProps {
 const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
   const location = useLocation();
   const isActive = () => {
-    return location.pathname.concat("/").includes(props.to)
-  }
+    return location.pathname.concat("/").includes(props.to);
+  };
 
   return (
     <A
@@ -64,9 +58,7 @@ const BottomBarLink: Component<BottomBarLinkProps> = (props) => {
       >
         <div
           style={{
-            color: isActive()
-              ? "#008080"
-              : "white",
+            color: isActive() ? "#008080" : "white",
             padding: isActive() ? "6px" : "4px",
           }}
           class="flex items-center justify-center transition-all duration-70 ease-in-out"
