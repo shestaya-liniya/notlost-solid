@@ -3,12 +3,12 @@ import { createSignal, JSX } from "solid-js";
 export default function Tappable(props: { children: JSX.Element }) {
   const [active, setActive] = createSignal(false);
 
-  const handleClick = () => {
+  /* const handleClick = () => {
     setActive(true);
     setTimeout(() => {
       setActive(false);
     }, 100);
-  };
+  }; */
 
   return (
     <div
@@ -18,7 +18,6 @@ export default function Tappable(props: { children: JSX.Element }) {
       onPointerDown={() => setActive(true)}
       onPointerUp={() => setActive(false)}
       onPointerLeave={() => setActive(false)}
-      onClick={handleClick}
     >
       {props.children}
     </div>
