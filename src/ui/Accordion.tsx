@@ -14,9 +14,7 @@ export default function Accordion(props: {
         toggleExpanded={() => setExpanded((prev) => !prev)}
         expanded={expanded()}
       />
-      <AccordionContent expanded={expanded()}>
-        {props.children}
-      </AccordionContent>
+      {expanded() && <AccordionContent>{props.children}</AccordionContent>}
     </div>
   );
 }
@@ -46,10 +44,7 @@ const AccordionHeader = (props: {
   );
 };
 
-const AccordionContent = (props: {
-  children: JSX.Element;
-  expanded: boolean;
-}) => {
+const AccordionContent = (props: { children: JSX.Element }) => {
   /* let contentRef: HTMLDivElement | undefined;
   const [contentHeight, setContentHeight] = createSignal(0);
   onMount(() => {
