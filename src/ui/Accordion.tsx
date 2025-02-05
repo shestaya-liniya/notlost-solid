@@ -51,20 +51,20 @@ const AccordionContent = (props: {
   children: JSX.Element;
   expanded: boolean;
 }) => {
-  let contentRef: HTMLDivElement | undefined;
+  /* let contentRef: HTMLDivElement | undefined;
   const [contentHeight, setContentHeight] = createSignal(0);
   onMount(() => {
     if (contentRef) {
       setContentHeight(contentRef.scrollHeight);
     }
-  });
+  }); */
   return (
     <Motion.div
-      ref={contentRef}
+      /* ref={contentRef} */
       class="overflow-hidden"
       initial={{ height: 0, opacity: 0 }}
       animate={{
-        height: props.expanded ? `${contentHeight()}px` : 0,
+        height: props.expanded ? `50px` : 0,
         opacity: props.expanded ? 1 : 0,
       }}
       transition={{ duration: 0.15, easing: "ease-in-out" }}
