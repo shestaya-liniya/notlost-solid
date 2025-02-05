@@ -6,6 +6,7 @@ import PencilIcon from "@/assets/pencil-icon.svg?component-solid";
 import Tappable from "@/ui/Tappable.jsx";
 import { createSignal } from "solid-js";
 import ManageDialogsModal from "./ManageDialogsModal.jsx";
+
 export default function TabBarLayout(props: {
   activeTab: string;
   setActiveTab: (tab: string) => void;
