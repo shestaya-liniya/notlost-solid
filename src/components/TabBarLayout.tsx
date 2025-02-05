@@ -2,21 +2,12 @@ import { Component, ParentProps } from "solid-js";
 import tgWallpaper from "@/assets/tg-wallpaper-paris.svg";
 import GraphIcon from "@/assets/graph-icon.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import PencilIcon from "@/assets/pencil-icon.svg?component-solid";
-import Tappable from "@/ui/Tappable.jsx";
-import { createSignal } from "solid-js";
-import ManageDialogsModal from "./ManageDialogsModal.jsx";
 
 export default function TabBarLayout(props: {
   activeTab: string;
   setActiveTab: (tab: string) => void;
   children: ParentProps["children"];
 }) {
-  const [isModalOpen, setIsModalOpen] = createSignal<boolean>(false);
-
-  const closeModal = () => setIsModalOpen(false);
-  const openModal = () => setIsModalOpen(true);
-
   return (
     <div class="flex flex-col" style={{ height: "100dvh" }}>
       <div class="flex-1 overflow-auto text-white relative">
@@ -29,15 +20,9 @@ export default function TabBarLayout(props: {
         <div style={{ "padding-top": "40px" }} class="h-full">
           {props.children}
         </div>
-        <Tappable
-          class="p-3 rounded-full bg-link absolute bottom-4 right-4"
-          onClick={openModal}
-        >
-          <PencilIcon class="w-7 h-7" />
-        </Tappable>
       </div>
+
       <TabBar activeTab={props.activeTab} setActiveTab={props.setActiveTab} />
-      <ManageDialogsModal isOpen={isModalOpen()} close={closeModal} />
     </div>
   );
 }
