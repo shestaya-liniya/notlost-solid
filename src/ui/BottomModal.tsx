@@ -18,7 +18,7 @@ const BottomModal = (props: ModalProps) => {
       }`}
     >
       <div
-        class={`bg-primary pointer-events-auto p-6 rounded-t-2xl shadow-lg transition-all ease-in-out duration-300 absolute bottom-0 w-full ${
+        class={`bg-primary pointer-events-auto p-6 rounded-t-2xl shadow-lg transition-all ease-in-out duration-500 absolute bottom-0 w-full ${
           props.isOpen
             ? " translate-y-0 opacity-100"
             : " translate-y-full opacity-0"
