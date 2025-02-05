@@ -1,4 +1,4 @@
-import { createSignal, JSX, onMount } from "solid-js";
+import { createSignal, JSX /* onMount */ } from "solid-js";
 import ChevronIcon from "@/assets/chevron-right.svg?component-solid";
 import FolderIcon from "@/assets/folder.svg?component-solid";
 import { Motion } from "solid-motionone";
