@@ -2,7 +2,7 @@ import BottomModal from "@/ui/BottomModal.jsx";
 import FolderIcon from "@/assets/folder.svg?component-solid";
 import { For, onCleanup } from "solid-js";
 import Dialog from "@/ui/Dialog.jsx";
-import { div } from "framer-motion/client";
+
 interface ManageDialogsModal {
   isOpen: boolean;
   close: () => void;
