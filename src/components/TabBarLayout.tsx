@@ -9,10 +9,9 @@ export default function TabBarLayout(props: ParentProps) {
     <div class="flex flex-col" style={{ height: "100dvh" }}>
       <div class="flex-1 overflow-auto text-white">
         <div
-          class="h-full w-full -z-10 absolute"
+          class="h-full w-full -z-10 absolute bg-link/5"
           style={{
             mask: `url(${tgWallpaper}) center / contain`,
-            "background-color": `${hexToRgba("#008080", 0.05)}`,
           }}
         />
         <div style={{ "padding-top": "40px" }}>
