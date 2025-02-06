@@ -6,7 +6,8 @@ import {
   initData,
   $debug,
   init as initSDK,
-} from '@telegram-apps/sdk-solid';
+  postEvent,
+} from "@telegram-apps/sdk-solid";
 
 /**
  * Initializes the application and configures its dependencies.
@@ -24,8 +25,8 @@ export function init(debug: boolean): void {
   miniApp.mount();
   themeParams.mount();
   initData.restore();
-  void viewport.mount().catch(e => {
-    console.error('Something went wrong mounting the viewport', e);
+  void viewport.mount().catch((e) => {
+    console.error("Something went wrong mounting the viewport", e);
   });
 
   // Define components-related CSS variables.
@@ -33,8 +34,11 @@ export function init(debug: boolean): void {
   miniApp.bindCssVars();
   themeParams.bindCssVars();
 
+  postEvent("web_app_setup_swipe_behavior", {
+    allow_vertical_swipe: false,
+  });
+
   // Add Eruda if needed.
-  debug && import('eruda')
-    .then((lib) => lib.default.init())
-    .catch(console.error);
+  debug &&
+    import("eruda").then((lib) => lib.default.init()).catch(console.error);
 }
