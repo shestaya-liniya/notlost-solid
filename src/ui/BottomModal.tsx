@@ -10,8 +10,10 @@ interface ModalProps {
 const BottomModal = (props: ModalProps) => {
   return (
     <div
-      class={`bg-primary pointer-events-auto p-6 rounded-t-2xl shadow-lg transition-all ease-in-out duration-300 absolute bottom-0 w-full ${
-        props.isOpen ? " opacity-100" : " opacity-0"
+      class={`bg-primary pointer-events-auto p-6 rounded-t-2xl shadow-lg transition-all ease-in-out duration-400 absolute bottom-0 w-full ${
+        props.isOpen
+          ? "translate-y-0 opacity-100"
+          : "translate-y-full opacity-0"
       }`}
       onClick={(e) => e.stopPropagation()}
     >
