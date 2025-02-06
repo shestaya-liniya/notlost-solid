@@ -1,6 +1,6 @@
 import BottomModal from "@/ui/BottomModal.jsx";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import { createSignal, For } from "solid-js";
+import { createSignal, For, ParentProps } from "solid-js";
 import Dialog from "@/ui/Dialog.jsx";
 
 interface ManageDialogsModal {
@@ -17,16 +17,14 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
     >
       <div class="flex items-center text-link justify-center mb-6">
         <div class="absolute bg-secondary px-2 py-1 rounded-2xl -z-10 h-10 w-[180px] bg-opacity-30" />
-        <div
-          /* ref={(el) => (newFolderRef = el)}
-          onTouchStart={(e) => handleTouchStart(e, "folder")} */
-          class="flex items-center bg-link/20 px-2 py-1 rounded-xl gap-2 font-medium touch-none no-select"
-        >
-          <div class="h-6 w-6">
-            <FolderIcon />
+        <DraggableBlock>
+          <div class="flex items-center bg-link/20 px-2 py-1 rounded-xl gap-2 font-medium touch-none no-select">
+            <div class="h-6 w-6">
+              <FolderIcon />
+            </div>
+            <div>Place new folder</div>
           </div>
-          <div>Place new folder</div>
-        </div>
+        </DraggableBlock>
       </div>
 
       <div class="flex flex-wrap gap-4 justify-center">
@@ -34,10 +32,9 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
           {(contact) => (
             <div class="relative">
               <div class="touch-none">
-                <DraggableDialog
-                  name={contact.name}
-                  username={contact.username}
-                />
+                <DraggableBlock>
+                  <Dialog name={contact.name} username={contact.username} />
+                </DraggableBlock>
               </div>
               <div class="absolute top-2 left-1/2 -translate-x-1/2 h-12 w-12 bg-secondary rounded-full -z-10 animate-pulse" />
             </div>
@@ -48,12 +45,7 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
   );
 }
 
-interface DraggableDialogProps {
-  name: string;
-  username: string;
-}
-
-const DraggableDialog = (props: DraggableDialogProps) => {
+const DraggableBlock = (props: ParentProps) => {
   let dialogRef!: HTMLDivElement;
   const [position, setPosition] = createSignal<{ x: number; y: number }>({
     x: 0,
@@ -101,7 +93,7 @@ const DraggableDialog = (props: DraggableDialogProps) => {
       onPointerUp={endDrag}
       onPointerCancel={endDrag}
     >
-      <Dialog name={props.name} username={props.username} />
+      {props.children}
     </div>
   );
 };
