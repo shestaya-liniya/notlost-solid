@@ -38,6 +38,10 @@ export function init(debug: boolean): void {
   if (WebApp.default) {
     WebApp.default.requestFullscreen();
     WebApp.default.disableVerticalSwipes();
+  } else {
+    postEvent("web_app_setup_swipe_behavior", {
+      allow_vertical_swipe: false,
+    });
   }
   // Add Eruda if needed.
   debug &&
