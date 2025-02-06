@@ -1,7 +1,6 @@
 import {
   backButton,
   viewport,
-  themeParams,
   miniApp,
   initData,
   setDebug,
