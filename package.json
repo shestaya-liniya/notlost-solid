@@ -22,7 +22,7 @@
     "@solidjs/router": "^0.13.6",
     "@tailwindcss/vite": "^4.0.3",
     "@tanstack/react-router": "^1.99.6",
-    "@telegram-apps/sdk-solid": "^2.0.5",
+    "@telegram-apps/sdk-solid": "^3.0.7",
     "@telegram-apps/telegram-ui": "^2.1.8",
     "@tonconnect/ui": "^2.0.5",
     "@twa-dev/sdk": "^8.0.2",

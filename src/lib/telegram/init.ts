@@ -4,7 +4,7 @@ import {
   themeParams,
   miniApp,
   initData,
-  $debug,
+  setDebug,
   init as initSDK,
 } from "@telegram-apps/sdk-solid";
 
@@ -13,7 +13,7 @@ import {
  */
 export function init(debug: boolean): void {
   // Set @telegram-apps/sdk-react debug mode.
-  $debug.set(debug);
+  setDebug(debug);
 
   // Initialize special event handlers for Telegram Desktop, Android, iOS, etc.
   // Also, configure the package.
@@ -21,22 +21,32 @@ export function init(debug: boolean): void {
 
   // Mount all components used in the project.
   backButton.isSupported() && backButton.mount();
-  miniApp.mount();
-  themeParams.mount();
   initData.restore();
-  void viewport.mount().catch((e) => {
-    console.error("Something went wrong mounting the viewport", e);
-  });
 
-  // Define components-related CSS variables.
-  viewport.bindCssVars();
-  miniApp.bindCssVars();
-  themeParams.bindCssVars();
+  void viewport
+    .mount()
+    .catch((e) => {
+      console.error("Something went wrong mounting the viewport", e);
+    })
+    .then(async () => {
+      viewport.bindCssVars();
+      if (viewport.requestFullscreen.isAvailable()) {
+        await viewport.requestFullscreen();
+      }
+    });
+
+  void miniApp
+    .mount()
+    .catch((e) => {
+      console.error("Something went wrong mounting the miniApp", e);
+    })
+    .then(async () => {
+      miniApp.bindCssVars();
+    });
 
   const webApp = (window as any)?.Telegram?.WebApp;
   if (webApp) {
     try {
-      webApp.requestFullscreen();
       webApp.disableVerticalSwipes();
     } catch (e) {
       console.log("Error requesting fullscreen", e);
