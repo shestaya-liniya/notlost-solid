@@ -1,6 +1,6 @@
 import BottomModal from "@/ui/BottomModal.jsx";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import { createSignal, For, onCleanup } from "solid-js";
+import { createSignal, For } from "solid-js";
 import Dialog from "@/ui/Dialog.jsx";
 
 interface ManageDialogsModal {
@@ -9,56 +9,6 @@ interface ManageDialogsModal {
 }
 
 export default function ManageDialogsModal(props: ManageDialogsModal) {
-  const dialogRefs: Record<string, HTMLDivElement | undefined> = {};
-  let newFolderRef: HTMLDivElement | undefined;
-
-  const handleTouchStart = (
-    e: TouchEvent,
-    draggableItemType: "contact" | "folder",
-    dialog?: { username: string; name: string }
-  ) => {
-    let touch = e.touches[0];
-    const ref =
-      draggableItemType === "folder"
-        ? newFolderRef
-        : dialogRefs[dialog!.username];
-
-    if (!ref) {
-      return;
-    }
-
-    const startPos = {
-      x: touch.clientX,
-      y: touch.clientY,
-    };
-
-    const handleTouchMove = (e: TouchEvent) => {
-      ref.style.transition = "";
-
-      touch = e.touches[0];
-      const dx = touch.clientX - startPos.x;
-      const dy = touch.clientY - startPos.y;
-
-      ref.style.transform = `translate(${dx}px, ${dy}px)`;
-    };
-
-    const handleTouchEnd = () => {
-      ref.style.transition = `transform 0.3s ease`;
-      ref.style.transform = `translate(0px, 0px)`;
-
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleTouchEnd);
-    };
-
-    document.addEventListener("touchmove", handleTouchMove);
-    document.addEventListener("touchend", handleTouchEnd);
-
-    onCleanup(() => {
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("touchend", handleTouchEnd);
-    });
-  };
-
   return (
     <BottomModal
       title="Manage dialogs"
@@ -68,8 +18,8 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
       <div class="flex items-center text-link justify-center mb-6">
         <div class="absolute bg-secondary px-2 py-1 rounded-2xl -z-10 h-10 w-[180px] bg-opacity-30" />
         <div
-          ref={(el) => (newFolderRef = el)}
-          onTouchStart={(e) => handleTouchStart(e, "folder")}
+          /* ref={(el) => (newFolderRef = el)}
+          onTouchStart={(e) => handleTouchStart(e, "folder")} */
           class="flex items-center bg-link/20 px-2 py-1 rounded-xl gap-2 font-medium touch-none no-select"
         >
           <div class="h-6 w-6">
@@ -104,6 +54,7 @@ interface DraggableDialogProps {
 }
 
 const DraggableDialog = (props: DraggableDialogProps) => {
+  let dialogRef!: HTMLDivElement;
   const [position, setPosition] = createSignal<{ x: number; y: number }>({
     x: 0,
     y: 0,
@@ -127,26 +78,24 @@ const DraggableDialog = (props: DraggableDialogProps) => {
 
   const onDrag = (e: MouseEvent | TouchEvent) => {
     if (!dragging) return;
+    dialogRef.style.transition = "";
     const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
     const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
-    setPosition({
-      x: startLeft + (clientX - startX),
-      y: startTop + (clientY - startY),
-    });
+    dialogRef.style.transform = `translate(${startLeft + (clientX - startX)}px, ${startTop + (clientY - startY)}px)`;
   };
 
   const endDrag = () => {
     dragging = false;
     // Reset the position to the initial position on drag end
+    dialogRef.style.transition = "transform 0.3s ease";
+    dialogRef.style.transform = `translate(${initialPosition().x}px, ${initialPosition().y}px)`;
     setPosition(initialPosition());
   };
 
   return (
     <div
+      ref={(el) => (dialogRef = el)}
       class="relative touch-none"
-      style={{
-        transform: `translate(${position().x}px, ${position().y}px)`,
-      }}
       onPointerDown={startDrag}
       onPointerMove={onDrag}
       onPointerUp={endDrag}
