@@ -19,9 +19,9 @@ export default function TabBarLayout(props: {
         />
         <div
           style={{
-            "padding-top":
-              "calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top))",
+            "padding-top": "40px",
           }}
+          // "calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top))",
           class="h-full"
         >
           {props.children}
