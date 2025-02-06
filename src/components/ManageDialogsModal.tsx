@@ -2,6 +2,7 @@ import BottomModal from "@/ui/BottomModal.jsx";
 import FolderIcon from "@/assets/folder.svg?component-solid";
 import { For, onCleanup } from "solid-js";
 import Dialog from "@/ui/Dialog.jsx";
+import { Motion } from "solid-motionone";
 
 interface ManageDialogsModal {
   isOpen: boolean;
@@ -82,16 +83,12 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
       <div class="flex flex-wrap gap-4 justify-center">
         <For each={trialContacts}>
           {(contact) => (
-            <div class="relative">
-              <div
-                ref={(el) => (dialogRefs[contact.username] = el)}
-                onTouchStart={(e) => handleTouchStart(e, "contact", contact)}
-                class="touch-none"
-              >
+            <Motion.div draggable class="relative">
+              <div class="touch-none">
                 <Dialog name={contact.name} username={contact.username} />
               </div>
               <div class="absolute top-2 left-1/2 -translate-x-1/2 h-12 w-12 bg-secondary rounded-full -z-10 animate-pulse" />
-            </div>
+            </Motion.div>
           )}
         </For>
       </div>
