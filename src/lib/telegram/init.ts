@@ -23,15 +23,6 @@ export function init(debug: boolean): void {
   backButton.isSupported() && backButton.mount();
   initData.restore();
 
-  void themeParams
-    .mount()
-    .catch((e) => {
-      console.error("Something went wrong mounting the themeParams", e);
-    })
-    .then(async () => {
-      themeParams.bindCssVars();
-    });
-
   void viewport
     .mount()
     .catch((e) => {
