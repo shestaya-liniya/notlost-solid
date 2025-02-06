@@ -17,7 +17,13 @@ export default function TabBarLayout(props: {
             mask: `url(${tgWallpaper}) center / contain`,
           }}
         />
-        <div style={{ "padding-top": "40px" }} class="h-full">
+        <div
+          style={{
+            "padding-top":
+              "calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top))",
+          }}
+          class="h-full"
+        >
           {props.children}
         </div>
       </div>

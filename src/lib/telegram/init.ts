@@ -36,12 +36,12 @@ export function init(debug: boolean): void {
 
   const webApp = (window as any)?.Telegram?.WebApp;
   if (webApp) {
-    webApp.requestFullscreen();
-    webApp.disableVerticalSwipes();
-  } else {
-    postEvent("web_app_setup_swipe_behavior", {
-      allow_vertical_swipe: false,
-    });
+    try {
+      webApp.requestFullscreen();
+      webApp.disableVerticalSwipes();
+    } catch (e) {
+      console.log("Error requesting fullscreen", e);
+    }
   }
   // Add Eruda if needed.
   debug &&
