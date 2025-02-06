@@ -8,7 +8,6 @@ import {
   init as initSDK,
   postEvent,
 } from "@telegram-apps/sdk-solid";
-import WebApp from "@twa-dev/sdk";
 
 /**
  * Initializes the application and configures its dependencies.
@@ -35,9 +34,10 @@ export function init(debug: boolean): void {
   miniApp.bindCssVars();
   themeParams.bindCssVars();
 
-  if (WebApp.default) {
-    WebApp.default.requestFullscreen();
-    WebApp.default.disableVerticalSwipes();
+  const webApp = (window as any)?.Telegram?.WebApp;
+  if (webApp) {
+    webApp.requestFullscreen();
+    webApp.disableVerticalSwipes();
   } else {
     postEvent("web_app_setup_swipe_behavior", {
       allow_vertical_swipe: false,
