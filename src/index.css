@@ -30,6 +30,8 @@ body {
 
   background: var(--tg-theme-secondary-bg-color, white);
   color: var(--tg-theme-text-color, black);
+  height: 100vh;
+  overflow: hidden;
 }
 
 blockquote {
