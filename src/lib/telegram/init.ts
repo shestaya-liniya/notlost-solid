@@ -6,7 +6,6 @@ import {
   initData,
   $debug,
   init as initSDK,
-  postEvent,
 } from "@telegram-apps/sdk-solid";
 
 /**
