@@ -1,8 +1,7 @@
 import BottomModal from "@/ui/BottomModal.jsx";
 import FolderIcon from "@/assets/folder.svg?component-solid";
-import { For, onCleanup } from "solid-js";
+import { createSignal, For, onCleanup } from "solid-js";
 import Dialog from "@/ui/Dialog.jsx";
-import { Motion } from "solid-motionone";
 
 interface ManageDialogsModal {
   isOpen: boolean;
@@ -83,18 +82,80 @@ export default function ManageDialogsModal(props: ManageDialogsModal) {
       <div class="flex flex-wrap gap-4 justify-center">
         <For each={trialContacts}>
           {(contact) => (
-            <Motion.div draggable class="relative">
+            <div class="relative">
               <div class="touch-none">
-                <Dialog name={contact.name} username={contact.username} />
+                <DraggableDialog
+                  name={contact.name}
+                  username={contact.username}
+                />
               </div>
               <div class="absolute top-2 left-1/2 -translate-x-1/2 h-12 w-12 bg-secondary rounded-full -z-10 animate-pulse" />
-            </Motion.div>
+            </div>
           )}
         </For>
       </div>
     </BottomModal>
   );
 }
+
+interface DraggableDialogProps {
+  name: string;
+  username: string;
+}
+
+const DraggableDialog = (props: DraggableDialogProps) => {
+  const [position, setPosition] = createSignal<{ x: number; y: number }>({
+    x: 0,
+    y: 0,
+  });
+  const [initialPosition, setInitialPosition] = createSignal<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
+
+  let dragging = false;
+  let startX: number, startY: number, startLeft: number, startTop: number;
+
+  const startDrag = (e: MouseEvent | TouchEvent) => {
+    dragging = true;
+    startX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    startY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    startLeft = position().x;
+    startTop = position().y;
+    setInitialPosition({ x: startLeft, y: startTop }); // Save the initial position on drag start
+  };
+
+  const onDrag = (e: MouseEvent | TouchEvent) => {
+    if (!dragging) return;
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
+    const clientY = "touches" in e ? e.touches[0].clientY : e.clientY;
+    setPosition({
+      x: startLeft + (clientX - startX),
+      y: startTop + (clientY - startY),
+    });
+  };
+
+  const endDrag = () => {
+    dragging = false;
+    // Reset the position to the initial position on drag end
+    setPosition(initialPosition());
+  };
+
+  return (
+    <div
+      class="relative touch-none"
+      style={{
+        transform: `translate(${position().x}px, ${position().y}px)`,
+      }}
+      onPointerDown={startDrag}
+      onPointerMove={onDrag}
+      onPointerUp={endDrag}
+      onPointerCancel={endDrag}
+    >
+      <Dialog name={props.name} username={props.username} />
+    </div>
+  );
+};
 
 const trialContacts = [
   { username: "shestaya_liniya", name: "Andrei", unreadCount: 0 },
