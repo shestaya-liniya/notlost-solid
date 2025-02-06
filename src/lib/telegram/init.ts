@@ -8,6 +8,7 @@ import {
   init as initSDK,
   postEvent,
 } from "@telegram-apps/sdk-solid";
+import WebApp from "@twa-dev/sdk";
 
 /**
  * Initializes the application and configures its dependencies.
@@ -34,10 +35,10 @@ export function init(debug: boolean): void {
   miniApp.bindCssVars();
   themeParams.bindCssVars();
 
-  postEvent("web_app_setup_swipe_behavior", {
-    allow_vertical_swipe: false,
-  });
-
+  if (WebApp.default) {
+    WebApp.default.requestFullscreen();
+    WebApp.default.disableVerticalSwipes();
+  }
   // Add Eruda if needed.
   debug &&
     import("eruda").then((lib) => lib.default.init()).catch(console.error);

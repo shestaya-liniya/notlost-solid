@@ -25,6 +25,7 @@
     "@telegram-apps/sdk-solid": "^2.0.5",
     "@telegram-apps/telegram-ui": "^2.1.8",
     "@tonconnect/ui": "^2.0.5",
+    "@twa-dev/sdk": "^8.0.2",
     "eruda": "^3.0.1",
     "framer-motion": "^12.1.0",
     "solid-js": "^1.8.17",
