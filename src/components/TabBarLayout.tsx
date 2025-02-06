@@ -42,7 +42,7 @@ function TabBar(props: {
   };
 
   return (
-    <div class="bg-primary border-t-[1px] border-primary">
+    <div class="bg-primary">
       <div class="max-w-screen-xl mx-auto px-4 pt-2 pb-4">
         <div class="flex justify-around items-center">
           <BottomBarLink

@@ -2,7 +2,7 @@
 
 @theme {
   /* --- backgrounds --- */
-  --color-primary: var(--tg-bg-color);
+  --color-primary: var(--tg-theme-bg-color);
   --color-secondary: var(--tg-theme-secondary-bg-color);
   --color-bezeled: var(--tgui--secondary_fill);
   /*------*/
@@ -21,12 +21,6 @@
   }
 }
 
-:root {
-  /* Ensure viewport variables are respected */
-  --tg-viewport-height: 100vh;
-  --tg-viewport-stable-height: 100vh;
-}
-
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Roboto", "Oxygen", "Ubuntu",
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -36,8 +30,7 @@ body {
 
   background: var(--tg-theme-secondary-bg-color, white);
   color: var(--tg-theme-text-color, black);
-  height: var(--tg-viewport-height, 100vh);
-  min-height: var(--tg-viewport-stable-height, 100vh);
+  height: 100vh;
   overflow: hidden;
 }
 
